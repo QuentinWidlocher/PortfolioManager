@@ -1,37 +1,38 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-nav-icon>
+        <v-icon>mdi-image-filter-none</v-icon>
+      </v-app-bar-nav-icon>
+      <v-toolbar-title>
+        <span> Portfolio Manager</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
     </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
+    <v-content id="MainPage">
+      <router-view/>
     </v-content>
+    
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-  data: () => ({
-    //
-  }),
-});
+@Component
+export default class App extends Vue {
+}
 </script>
+
+<style lang="scss" scoped>
+#MainPage {
+  width: 100vw;
+  height: calc(100vh - 4rem);
+
+  > * > * {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+</style>
+

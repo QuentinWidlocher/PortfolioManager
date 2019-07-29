@@ -1,0 +1,25 @@
+[debug] [2019-07-28T21:30:32.086Z] ----------------------------------------------------------------------
+[debug] [2019-07-28T21:30:32.091Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\1855639\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-07-28T21:30:32.091Z] CLI Version:   7.2.1
+[debug] [2019-07-28T21:30:32.091Z] Platform:      win32
+[debug] [2019-07-28T21:30:32.091Z] Node Version:  v8.11.1
+[debug] [2019-07-28T21:30:32.092Z] Time:          Sun Jul 28 2019 23:30:32 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2019-07-28T21:30:32.092Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-28T21:30:32.109Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-28T21:30:32.111Z] > authorizing via signed-in user
+[debug] [2019-07-28T21:30:32.111Z] [iam] checking project portfolio-9b0b3 for permissions ["firebase.projects.get"]
+[debug] [2019-07-28T21:30:32.116Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/portfolio-9b0b3:testIamPermissions  
+
+[debug] [2019-07-28T21:30:32.952Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-28T21:30:32.956Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/portfolio-9b0b3  
+ 
+[debug] [2019-07-28T21:30:33.254Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'D:\Dev\Web\Vue\portfoliomanager'...
+[info] 
+[debug] [2019-07-28T21:30:33.264Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/portfolio-9b0b3/webApps/-/config  
+ 
+[debug] [2019-07-28T21:30:33.560Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] +  hosting: Local server: http://localhost:5000
