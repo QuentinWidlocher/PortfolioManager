@@ -8,6 +8,7 @@
         <span> Portfolio Manager</span>
       </v-toolbar-title>
     </v-app-bar>
+    
     <v-content id="MainPage">
       <router-view/>
     </v-content>
@@ -27,11 +28,13 @@ export default class App extends Vue {
 #MainPage {
   width: 100vw;
   height: calc(100vh - 4rem);
+  overflow: hidden;
 
   > * > * {
     width: 100%;
     height: 100%;
     display: flex;
+    overflow-y: scroll;
   }
 }
 </style>
