@@ -1,6 +1,6 @@
 <template>
     <div id="Login">
-        <form>
+        <form v-on:submit.prevent="login">
             <h1>Please login to continue</h1>
 
             <v-text-field
@@ -17,12 +17,24 @@
                 @click:append="showPassword = !showPassword"
             ></v-text-field>
 
-            <v-btn
-                rounded
-                color="primary"
-            >
-                <v-icon left>mdi-account-arrow-right</v-icon> Login
-            </v-btn>
+            <div class="bottom-row">
+                <v-alert
+                    dense
+                    outlined
+                    type="error"
+                    v-if="errorMessage"
+                    >
+                    {{errorMessage}}
+                </v-alert>
+                <v-btn
+                    rounded
+                    type="submit"
+                    :loading="loading"
+                    color="primary"
+                >
+                    <v-icon left>mdi-account-arrow-right</v-icon> Login
+                </v-btn>
+            </div>
         </form>
     </div>
 </template>

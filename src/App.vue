@@ -35,7 +35,6 @@ export default class App extends Vue {
     width: 100%;
     height: 100%;
     display: flex;
-    overflow-y: scroll;
   }
 }
 </style>

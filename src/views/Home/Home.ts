@@ -10,16 +10,19 @@ import { firebaseService } from '@/services/firebase';
 })
 export default class Home extends Vue {
     private projects: Project[] = [];
+    private loadingProjects: boolean = true;
 
     private mounted() {
         this.loadProjects();
     }
 
     private loadProjects() {
+        this.loadingProjects = true;
         firebaseService.db.collection('projects').get().then((snapshot: any) => {
             snapshot.forEach((doc: any) => {                
                 this.projects.push(doc.data());
             });
+            this.loadingProjects = false;
         });
     }
 }

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "portfolio-manager",
     "public": "dist",
     "ignore": [
       "firebase.json",

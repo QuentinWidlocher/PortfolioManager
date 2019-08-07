@@ -1,8 +1,10 @@
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 export class FirebaseService {
-    public db: any;
+    public db: firebase.firestore.Firestore;
+    public auth: firebase.auth.Auth;
 
     public constructor() {
         let firebaseConfig = {
@@ -19,6 +21,18 @@ export class FirebaseService {
         firebase.initializeApp(firebaseConfig);
 
         this.db = firebase.firestore();
+        this.auth = firebase.auth();
+
+        this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    }
+
+    public getCurrentUser(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const unsubscribe = this.auth.onAuthStateChanged((user: any) => {
+                unsubscribe();
+                resolve(user);
+            }, reject);
+        });
     }
 }
 
