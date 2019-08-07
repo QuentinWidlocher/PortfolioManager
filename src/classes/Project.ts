@@ -1,4 +1,4 @@
-export class CardClass {
+export class Project {
     public name: string;
     public description: string;
     public picture: string;

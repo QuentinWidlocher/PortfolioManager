@@ -1,12 +1,6 @@
 <template>
     <div id="Home">
-        <Card :card="card"/>
-        <Card :card="card"/>
-        <Card :card="card"/>
-        <Card :card="card"/>
-        <Card :card="card"/>
-        <Card :card="card"/>
-        <Card :card="card"/>
+        <Card :project="project" v-for="(project, index) in projects" v-bind:key="index"/>
     </div>
 </template>
 <script lang="ts" src="./Home.ts"></script>

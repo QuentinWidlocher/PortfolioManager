@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
+
       <v-app-bar-nav-icon>
         <v-icon>mdi-image-filter-none</v-icon>
       </v-app-bar-nav-icon>
