@@ -16,7 +16,7 @@
                 <span>{{project.description}}</span>
             </div>
             <div class="card__badges">
-                <span v-for="(tag, index) in project.tags" v-bind:key="index" class="card__badge" :style="`background-color: #${project.gradientEnd}7F;`">{{tag}}</span>
+                <div v-for="(tag, index) in project.tags" v-bind:key="index" class="card__badge" :style="`background-color: #${project.gradientEnd}7F;`">{{tag}}</div>
             </div>
         </div>
     </router-link>

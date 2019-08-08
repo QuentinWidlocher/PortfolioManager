@@ -1,14 +1,20 @@
 <template>
     <div id="Home">
-        <v-progress-circular
-            :width="5"
-            :size="100"
-            class="ma-auto"
-            color="primary"
-            indeterminate
-            v-if="loadingProjects"
-        ></v-progress-circular>
-        <Card :project="project" v-for="(project, index) in projects" v-bind:key="index"/>
+            <v-progress-circular
+                :width="5"
+                :size="100"
+                class="ma-auto"
+                color="primary"
+                indeterminate
+                v-if="loadingProjects"
+            ></v-progress-circular>
+        <v-container grid-list-lg>
+            <v-layout wrap justify-center>
+                <v-flex v-for="project in projects" :key="project.id" shrink>
+                    <Card :project="project"/>
+                </v-flex>
+            </v-layout>
+        </v-container>
     </div>
 </template>
 <script lang="ts" src="./Home.ts"></script>

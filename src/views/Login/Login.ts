@@ -2,7 +2,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { firebaseService } from '@/services/firebase';
 import router from '@/router';
 
-@Component
+@Component({})
 export default class Login extends Vue {
     private username: string = '';
     private password: string = '';

@@ -3,7 +3,7 @@ import { Project } from '@/classes/Project';
 import { firebaseService } from '@/services/firebase';
 import router from '@/router';
 
-@Component
+@Component({})
 export default class ProjectView extends Vue {
     @Prop() projectID: string;
     project: Project;
@@ -43,7 +43,13 @@ export default class ProjectView extends Vue {
 
     private save() {
         this.projectRef.update(this.project).then(() => {
-            this.snackbarShow(`${this.project.name} has been succesfully edited !`, 'success').then(() => {
+
+            const message: string = `
+                ${this.project.name} has been succesfully edited !
+                Return to home page in ${this.snackbar.timeout/1000} seconds.
+            `;
+
+            this.snackbarShow(message, 'success').then(() => {
                 router.push({ name: 'home' });
             });            
         }).catch((error: any) => {
@@ -51,7 +57,7 @@ export default class ProjectView extends Vue {
         });
     }
 
-    private snackbarShow(text: string, color: string = 'primary', timeout: number = 5000): Promise<void> {
+    private snackbarShow(text: string, color: string = 'primary', timeout: number = this.snackbar.timeout): Promise<void> {
         this.snackbar.text = text;
         this.snackbar.color = color;
         this.snackbar.visible = true;
