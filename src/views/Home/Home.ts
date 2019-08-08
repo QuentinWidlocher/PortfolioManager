@@ -19,8 +19,10 @@ export default class Home extends Vue {
     private loadProjects() {
         this.loadingProjects = true;
         firebaseService.db.collection('projects').get().then((snapshot: any) => {
-            snapshot.forEach((doc: any) => {                
-                this.projects.push(doc.data());
+            snapshot.forEach((doc: any) => {    
+                let project = doc.data();
+                project.id = doc.id;
+                this.projects.push(project);
             });
             this.loadingProjects = false;
         });

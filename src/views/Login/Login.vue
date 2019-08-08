@@ -5,7 +5,7 @@
 
             <v-text-field
                 v-model="username"
-                label="Username"
+                label="Email"
             ></v-text-field>
 
             <v-text-field

@@ -1,5 +1,5 @@
 <template>
-    <a href="" class="card">
+    <router-link :to="{ name: 'project', params: { projectID: project.id }}" class="card">
         <div class="card__gradient"
             :style="`
                 background: #${project.gradientStart};
@@ -19,7 +19,7 @@
                 <span v-for="(tag, index) in project.tags" v-bind:key="index" class="card__badge" :style="`background-color: #${project.gradientEnd}7F;`">{{tag}}</span>
             </div>
         </div>
-    </a>
+    </router-link>
 </template>
 <script lang="ts" src="./Card.ts"></script>
 <style lang="scss" scoped src="./Card.scss"></style>
