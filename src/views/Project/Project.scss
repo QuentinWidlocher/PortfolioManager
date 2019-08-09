@@ -1,8 +1,15 @@
 #Project {
-    >.v-container {
-        width: 50%;
-        margin-top: 5rem;
-        margin-left: auto;
-        margin-right: auto;
+    .picture {
+        $card_size: 25rem;
+        $card_radius: 0.5rem;
+        $space: 1.8rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: $card_size;
+        width: $card_size;
+        border-radius: $card_radius;
     }
 }

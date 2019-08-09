@@ -3,6 +3,7 @@ import firebase from 'firebase';
 export class FirebaseService {
     public db: firebase.firestore.Firestore;
     public auth: firebase.auth.Auth;
+    public storage: firebase.storage.Reference;
 
     public constructor() {
         let firebaseConfig = {
@@ -20,6 +21,7 @@ export class FirebaseService {
 
         this.db = firebase.firestore();
         this.auth = firebase.auth();
+        this.storage = firebase.storage().ref();
 
         this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     }

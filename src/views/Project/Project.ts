@@ -11,6 +11,8 @@ export default class ProjectView extends Vue {
     readyToDisplay: boolean = false;
 
     createMode: boolean;
+    fileUploading: boolean = false;
+    fileUploaded: boolean = false;
 
     snackbar: any = {
         visible: false,
@@ -52,6 +54,12 @@ export default class ProjectView extends Vue {
     }
 
     private save() {
+
+        if (this.fileUploading) {
+            this.snackbarShow('Please wait before the picture is uploaded', 'error');
+            return;
+        }
+
         if (this.createMode) {
             this.createProject();
         } else {
@@ -100,6 +108,25 @@ export default class ProjectView extends Vue {
                 this.snackbar.visible = false;
                 rslv();
             }, timeout);
+        });
+    }
+
+    private onFileChange(file: any) {
+        this.fileUploading = false;
+        this.fileUploaded = false;
+        
+        if (!file) return;
+        
+        this.fileUploading = true;
+        firebaseService.storage.child(file.name).put(file).then((snapshot: any) => {
+            console.log(snapshot);
+            
+            this.fileUploading = false;
+            this.fileUploaded = true;
+
+            return snapshot.ref.getDownloadURL();
+        }).then((downloadURL: string) => {
+            this.project.picture = downloadURL;
         });
     }
 }
