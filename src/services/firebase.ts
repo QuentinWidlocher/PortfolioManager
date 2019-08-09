@@ -1,6 +1,4 @@
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase';
 
 export class FirebaseService {
     public db: firebase.firestore.Firestore;
@@ -27,11 +25,11 @@ export class FirebaseService {
     }
 
     public getCurrentUser(): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise<any>(rslv => {
             const unsubscribe = this.auth.onAuthStateChanged((user: any) => {
                 unsubscribe();
-                resolve(user);
-            }, reject);
+                rslv(user);
+            });
         });
     }
 }

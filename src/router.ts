@@ -13,6 +13,7 @@ const router = new Router({
     { path: '/', redirect: { name: 'home' } },
     { path: "/login", name: "login", component: Login },
     { path: "/home", name: "home", component: () => import(/* webpackChunkName: "home" */ "./views/Home/Home.vue") },
+    { path: "/project/add", name: "project-add", component: () => import(/* webpackChunkName: "project" */ "./views/Project/Project.vue") },
     { path: "/project/:projectID", name: "project", props: true, component: () => import(/* webpackChunkName: "project" */ "./views/Project/Project.vue") },
   ]
 });
