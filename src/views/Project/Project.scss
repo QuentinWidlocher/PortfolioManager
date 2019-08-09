@@ -11,5 +11,14 @@
         height: $card_size;
         width: $card_size;
         border-radius: $card_radius;
+
+        
+        --gradientStart: #000000;
+        --gradientEnd: #000000;
+        
+        background: var(--gradientStart);
+        background: -moz-linear-gradient(45deg, var(--gradientStart) 0%, var(--gradientEnd) 100%);
+        background: -webkit-linear-gradient(45deg, var(--gradientStart) 0%, var(--gradientEnd) 100%);
+        background: linear-gradient(45deg, var(--gradientStart) 0%, var(--gradientEnd) 100%);
     }
 }

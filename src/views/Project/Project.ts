@@ -10,6 +10,9 @@ export default class ProjectView extends Vue {
     projectRef: firebase.firestore.DocumentReference;
     readyToDisplay: boolean = false;
 
+    gradientStart: string = '#000000';
+    gradientEnd: string = '#000000';
+
     createMode: boolean;
     fileUploading: boolean = false;
     fileUploaded: boolean = false;
@@ -38,6 +41,8 @@ export default class ProjectView extends Vue {
         this.projectRef.get().then((snapshot: any) => {
             
             this.project = snapshot.data();
+            this.gradientStart = this.project.gradientStart;
+            this.gradientEnd = this.project.gradientEnd;
 
             if (!this.project) {
                 router.push({ name: 'home' });
@@ -59,6 +64,9 @@ export default class ProjectView extends Vue {
             this.snackbarShow('Please wait before the picture is uploaded', 'error');
             return;
         }
+
+        this.project.gradientStart = this.gradientStart.substr(1);
+        this.project.gradientEnd = this.gradientEnd.substr(1);
 
         if (this.createMode) {
             this.createProject();
