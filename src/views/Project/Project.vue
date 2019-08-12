@@ -5,7 +5,7 @@
 
                 <v-flex row xs12 class="mb-5">
                     <v-layout xs12 sm6 lg4 justify-center align-center class="mb-0">
-                        <div class="picture" :style="{ '--gradientStart': gradientStart, '--gradientEnd': gradientEnd}">                            
+                        <div class="picture" :style="{ '--gradientAngle': project.gradientAngle + 'deg', '--gradientStart': gradientStart, '--gradientEnd': gradientEnd}">                            
                             <img :src="project.picture" width="200">
                         </div>
                     </v-layout>

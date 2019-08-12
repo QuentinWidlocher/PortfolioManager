@@ -1,12 +1,7 @@
 <template>
     <router-link :to="{ name: 'project', params: { projectID: project.id }}" class="card">
         <div class="card__gradient"
-            :style="`
-                background: #${project.gradientStart};
-                background: -moz-linear-gradient(${project.gradientAngle}deg, #${project.gradientStart} 0%, #${project.gradientEnd} 100%);
-                background: -webkit-linear-gradient(${project.gradientAngle}deg, #${project.gradientStart} 0%, #${project.gradientEnd} 100%);
-                background: linear-gradient(${project.gradientAngle}deg, #${project.gradientStart} 0%, #${project.gradientEnd} 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#${project.gradientStart}', endColorstr='#${project.gradientEnd}', GradientType=1);`"
+            :style="`--gradientAngle: ${project.gradientAngle}deg; --gradientStart: #${project.gradientStart}; --gradientEnd: #${project.gradientEnd}`"
         >
             <img class="card_image" :src="project.picture" :alt="`${project.name} Logo`" width="200">
         </div>
