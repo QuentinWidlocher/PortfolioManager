@@ -56,8 +56,62 @@
                 </v-flex>
 
                 <v-flex justify-end row>
+                    
+                    <v-dialog
+                        max-width="600"
+                        v-model="deleteDialog"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-if="!createMode"
+                                class="mr-auto"
+                                text
+                                color="error"
+                                v-on="on"
+                            >
+                                Delete Project
+                            </v-btn>
+                        </template>
+
+                        <v-alert
+                            border="left"
+                            colored-border
+                            color="error"
+                            icon="mdi-alert-circle"
+                            prominent
+                            class="mb-0"
+                        >
+                            <h3 class="headline">Warning !</h3>
+                            <p>
+                                You're about to delete the project named "{{project.name}}". <br>
+                                This action is <b>IRREVERSIBLE</b> !<br>
+                                Are you sure you want to delete the project named "{{project.name}}" ? <br>
+                            </p>
+
+                            <v-divider class="my-4 error"></v-divider>
+
+                            <v-layout justify-end>
+                                <v-btn
+                                    class="mr-auto"
+                                    color="error"
+                                    rounded 
+                                    text          
+                                    @click="deleteProject"                     
+                                >
+                                    Delete the project
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    rounded  
+                                    outlined     
+                                    @click="deleteDialog = false"                 
+                                >
+                                    Cancel
+                                </v-btn>
+                            </v-layout>
+                        </v-alert>
+                    </v-dialog>
                     <v-btn
-                        class="mr-2"
                         outlined
                         rounded
                         :color="'error'"
@@ -66,9 +120,10 @@
                         Cancel
                     </v-btn>
                     <v-btn
+                    class="ml-2"
                         :color="'success'"
                         rounded
-                        @click="save"
+                        @click="saveProject"
                     >
                         <v-icon left>mdi-content-save</v-icon>
                         Save
@@ -76,6 +131,8 @@
                 </v-flex>
             </v-layout>
         </v-container>
+
+        
 
         <v-snackbar
             v-model="snackbar.visible"

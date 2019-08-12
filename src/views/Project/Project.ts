@@ -13,6 +13,8 @@ export default class ProjectView extends Vue {
     gradientStart: string = '#000000';
     gradientEnd: string = '#000000';
 
+    deleteDialog: boolean = false;
+
     createMode: boolean;
     fileUploading: boolean = false;
     fileUploaded: boolean = false;
@@ -58,21 +60,41 @@ export default class ProjectView extends Vue {
         router.push({ name: 'home' });
     }
 
-    private save() {
+    private saveProject() {
 
         if (this.fileUploading) {
             this.snackbarShow('Please wait before the picture is uploaded', 'error');
             return;
         }
 
-        this.project.gradientStart = this.gradientStart.substr(1);
-        this.project.gradientEnd = this.gradientEnd.substr(1);
+        this.project.gradientStart = this.gradientStart.slice(1, 7);
+        this.project.gradientEnd = this.gradientEnd.slice(1, 7);
 
         if (this.createMode) {
             this.createProject();
         } else {
             this.updateProject();
         }
+    }
+
+    private deleteProject() {
+        if (this.createMode) return;
+
+        this.deleteDialog = false;
+
+        this.projectRef.delete().then(() => {
+
+            const message: string = `
+                ${this.project.name} has been succesfully deleted !
+                Return to home page in ${this.snackbar.timeout / 1000} seconds.
+            `;
+
+            this.snackbarShow(message, 'error').then(() => {
+                router.push({ name: 'home' });
+            });
+        }).catch((error: any) => {
+            this.snackbarShow(error, 'error');
+        });
     }
 
     private createProject() {
