@@ -10,14 +10,16 @@ export default class ProjectView extends Vue {
     projectRef: firebase.firestore.DocumentReference;
     readyToDisplay: boolean = false;
 
-    gradientStart: string = '#000000';
-    gradientEnd: string = '#000000';
+    gradientStart: string = '#EDEDED';
+    gradientEnd: string = '#EDEDED';
+    gradientAngle: number = 180;
 
     deleteDialog: boolean = false;
 
     createMode: boolean;
     fileUploading: boolean = false;
     fileUploaded: boolean = false;
+    fileDownloaded: boolean = true;
 
     snackbar: any = {
         visible: false,
@@ -45,6 +47,7 @@ export default class ProjectView extends Vue {
             this.project = snapshot.data();
             this.gradientStart = this.project.gradientStart;
             this.gradientEnd = this.project.gradientEnd;
+            this.gradientAngle = this.project.gradientAngle;
 
             if (!this.project) {
                 router.push({ name: 'home' });
@@ -69,6 +72,7 @@ export default class ProjectView extends Vue {
 
         this.project.gradientStart = this.gradientStart.slice(1, 7);
         this.project.gradientEnd = this.gradientEnd.slice(1, 7);
+        this.project.gradientAngle = this.gradientAngle;
 
         if (this.createMode) {
             this.createProject();
@@ -144,6 +148,7 @@ export default class ProjectView extends Vue {
     private onFileChange(file: any) {
         this.fileUploading = false;
         this.fileUploaded = false;
+        this.fileDownloaded = false;
         
         if (!file) return;
         
@@ -157,6 +162,7 @@ export default class ProjectView extends Vue {
             return snapshot.ref.getDownloadURL();
         }).then((downloadURL: string) => {
             this.project.picture = downloadURL;
+            this.fileDownloaded = true;
         });
     }
 }
