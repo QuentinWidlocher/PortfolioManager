@@ -8,8 +8,8 @@
         align-items: center;
         justify-content: center;
 
-        height: $card_size;
-        width: $card_size;
+        min-height: $card_size;
+        max-width: $card_size;
         border-radius: $card_radius;
         background-color: #CFD8DC;
 

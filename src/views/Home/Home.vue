@@ -9,22 +9,22 @@
             v-if="loadingProjects"
         ></v-progress-circular>
         <v-container grid-list-lg v-if="!loadingProjects">
-            <v-layout wrap justify-center>
+            <v-row justify="center">
 
-                <v-flex shrink>
-                    <router-link :to="{ name: 'project-add' }" class="add-card">
+                <v-col cols="12" md="6" lg="4" xl="3">
+                    <router-link :to="{ name: 'project-add' }" class="add-card ma-auto">
                         <v-layout column shrink justify-center class="add-card-text">
                             <v-icon size="100" color="black">mdi-plus-box</v-icon>
                             <h1>Add a project</h1>
                         </v-layout>
                     </router-link>
-                </v-flex>
+                </v-col>
 
-                <v-flex v-for="project in projects" :key="project.id" shrink>
-                    <Card :project="project"/>
-                </v-flex>
+                <v-col cols="12" md="6" lg="4" xl="3" v-for="project in projects" :key="project.id">
+                    <Card :project="project" class="ma-auto"/>
+                </v-col>
 
-            </v-layout>
+            </v-row>
         </v-container>
     </div>
 </template>
