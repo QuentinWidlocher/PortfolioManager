@@ -8,6 +8,7 @@ export class Project {
     public gradientStart: string;
     public gradientEnd: string;
     public gradientAngle: number;
+    public editionDate: number;
 
     public constructor( id: string, name: string, description: string, picture: string, link: string, tags: string[],
                         gradientStart: string, gradientEnd: string, gradientAngle: number) {

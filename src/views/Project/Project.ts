@@ -18,7 +18,10 @@ export default class ProjectView extends Vue {
     tags: string[] = [];
     selectedTags: string[] = [];
 
+    editionDate: string = new Date().toISOString().substr(0, 10);
+
     deleteDialog: boolean = false;
+    dateDialog: boolean = false;
 
     createMode: boolean;
     fileUploading: boolean = false;
@@ -31,7 +34,7 @@ export default class ProjectView extends Vue {
         (v: string) => (v && v.length <= 20) || 'Name must be less than 20 characters'
     ]
     descriptionRules = [
-        (v: string) => (v.length <= 20) || 'Description must be less than 20 characters'
+        (v: string) => (!v || (v && v.length <= 20)) || 'Description must be less than 20 characters'
     ]
     urlRules = [
         (v: string) => (!v || !!v.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) || 'Url is not valid',
@@ -61,7 +64,7 @@ export default class ProjectView extends Vue {
         return c;
     }
 
-    private get textColor() {
+    private get textColor(): string {
         let middleColor = this.middleColor;
         let m = middleColor.substr(1).match(middleColor.length == 7 ? /(\S{2})/g : /(\S{1})/g);
         if (m) {
@@ -71,6 +74,11 @@ export default class ProjectView extends Vue {
             return (brightness > 150 ? "black" : "white")
         }
         return "black";
+    }
+
+    private get formattedEditionDate(): string {
+        const [year, month, day] = this.editionDate.split('-');
+        return `${day}/${month}/${year}`;
     }
 
     private mounted() {
@@ -95,7 +103,11 @@ export default class ProjectView extends Vue {
             this.gradientEnd = this.project.gradientEnd;
             this.gradientAngle = this.project.gradientAngle;
             this.tags = this.project.tags;
-            this.selectedTags = this.tags;            
+            this.selectedTags = this.tags;
+            
+            if (this.project.editionDate) {
+                this.editionDate = new Date(this.project.editionDate * 1000).toISOString().substr(0, 10);            
+            }
 
             if (!this.project) {
                 router.push({ name: 'home' });
@@ -133,6 +145,9 @@ export default class ProjectView extends Vue {
         this.project.gradientEnd = this.gradientEnd.slice(1, 7);
         this.project.gradientAngle = this.gradientAngle;
         this.project.tags = this.tags;
+        this.project.editionDate = new Date(this.editionDate).getTime()/1000;
+        console.log(this.project.editionDate);
+        
 
         if (this.createMode) {
             this.createProject();

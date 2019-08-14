@@ -77,7 +77,7 @@
                             :rules="urlRules"
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" lg="8" class="pt-sm-0">
                         <v-combobox
                             v-model="tags"
                             :items="tags"
@@ -104,6 +104,29 @@
                                 </v-chip>
                             </template>
                         </v-combobox>
+                    </v-col>
+                    <v-col cols="12" lg="4">
+                        <v-dialog
+                            v-model="dateDialog"
+                            full-width
+                            width="290px"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="formattedEditionDate"
+                                    label="Last edited date"
+                                    prepend-icon="mdi-calendar-edit"
+                                    readonly
+                                    v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker 
+                                v-model="editionDate"
+                            >
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="dateDialog = false">OK</v-btn>
+                            </v-date-picker>
+                        </v-dialog>
                     </v-col>
                 </v-row>
                 <v-row id="buttons" class="pb-5" justify="end">
