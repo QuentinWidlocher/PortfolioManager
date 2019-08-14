@@ -3,7 +3,7 @@
         <div class="card__gradient"
             :style="`--gradientAngle: ${project.gradientAngle}deg; --gradientStart: #${project.gradientStart}; --gradientEnd: #${project.gradientEnd}`"
         >
-            <img class="card_image" :src="project.picture" :alt="`${project.name} Logo`" width="200">
+            <img class="card_image" v-if="project.picture" :src="project.picture" :alt="`${project.name} Logo`" @error="project.picture = undefined">
         </div>
         <div class="card__info">
             <div class="card__title">

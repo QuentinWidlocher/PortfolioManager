@@ -25,5 +25,9 @@
         background: -moz-linear-gradient(var(--gradientAngle), var(--gradientStart) 0%, var(--gradientEnd) 100%);
         background: -webkit-linear-gradient(var(--gradientAngle), var(--gradientStart) 0%, var(--gradientEnd) 100%);
         background: linear-gradient(var(--gradientAngle), var(--gradientStart) 0%, var(--gradientEnd) 100%);
+
+        >img {
+            max-width: 50%;
+        }
     }
 }

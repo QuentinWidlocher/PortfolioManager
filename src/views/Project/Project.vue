@@ -6,7 +6,7 @@
                     <v-col sm="12" lg="4" >
                         <v-row justify="center">
                             <div id="picture" class="picture" :style="{ '--gradientAngle': gradientAngle + 'deg', '--gradientStart': gradientStart, '--gradientEnd': gradientEnd}">                            
-                                <img v-if="fileDownloaded" :src="project.picture" width="200">
+                                <img v-if="fileDownloaded" :src="project.picture">
                                 <v-progress-circular
                                     v-if="!fileDownloaded"
                                     size="100"

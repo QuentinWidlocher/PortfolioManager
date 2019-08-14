@@ -28,7 +28,7 @@ export default class ProjectView extends Vue {
     formValid: boolean = true;
     nameRules = [
         (v: string) => !!v || 'Name is required',
-        (v: string) => (v && v.length <= 16) || 'Name must be less than 16 characters'
+        (v: string) => (v && v.length <= 20) || 'Name must be less than 20 characters'
     ]
     descriptionRules = [
         (v: string) => (v.length <= 20) || 'Description must be less than 20 characters'
@@ -108,7 +108,13 @@ export default class ProjectView extends Vue {
     }
 
     private cancel() {
-        router.push({ name: 'home' });
+        if (this.createMode && this.projectRef) {
+            this.projectRef.delete().then(() => {
+                router.push({ name: 'home' });
+            })
+        } else {
+            router.push({ name: 'home' });
+        }
     }
 
     private saveProject() {
@@ -181,7 +187,7 @@ export default class ProjectView extends Vue {
             this.snackbarShow(message, 'success').then(() => {
                 router.push({ name: 'home' });
             });
-        }).catch((error: any) => {
+        }).catch((error: string) => {
             this.snackbarShow(error, 'error');
         });
     }
@@ -207,16 +213,35 @@ export default class ProjectView extends Vue {
         if (!file) return;
         
         this.fileUploading = true;
-        firebaseService.storage.child(file.name).put(file).then((snapshot: any) => {
-            console.log(snapshot);
-            
-            this.fileUploading = false;
-            this.fileUploaded = true;
 
-            return snapshot.ref.getDownloadURL();
-        }).then((downloadURL: string) => {
-            this.project.picture = downloadURL;
-            this.fileDownloaded = true;
-        });
+        let createPromise: Promise<string>;
+        if (this.createMode) {
+            createPromise = new Promise<string>((rslv) => {
+                firebaseService.db.collection('projects').add(this.project).then((ref: any) => {
+                    this.projectRef = ref;
+                    rslv(ref.id);
+                });
+            })
+        } else {
+            createPromise = new Promise<string>((rslv) => {
+                rslv(this.projectID);
+            })
+        }
+
+        createPromise.then((projectId: string) => {
+            firebaseService.storage.child(projectId).put(file).then((snapshot: any) => {
+                console.log(snapshot);
+
+                this.fileUploading = false;
+                this.fileUploaded = true;
+
+                return snapshot.ref.getDownloadURL();
+            }).then((downloadURL: string) => {
+                this.project.picture = downloadURL;
+                this.fileDownloaded = true;
+            }).catch((error: string) => {
+                this.snackbarShow(error, 'error');
+            });
+        });        
     }
 }
