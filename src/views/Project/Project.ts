@@ -20,6 +20,7 @@ export default class ProjectView extends Vue {
     fileUploading: boolean = false;
     fileUploaded: boolean = false;
     fileDownloaded: boolean = true;
+    formValid: boolean = true;
 
     snackbar: any = {
         visible: false,
@@ -27,6 +28,8 @@ export default class ProjectView extends Vue {
         color: 'primary',
         timeout: 2000,
     }
+
+    $refs: any;
 
     private mounted() {
         this.createMode = (this.projectID === undefined);
@@ -64,6 +67,11 @@ export default class ProjectView extends Vue {
     }
 
     private saveProject() {
+
+        if (!(this.$refs.form as any).validate() && !this.formValid) {
+            this.snackbarShow('Some fields are not correctly filled', 'error');
+            return;
+        }
 
         if (this.fileUploading) {
             this.snackbarShow('Please wait before the picture is uploaded', 'error');
