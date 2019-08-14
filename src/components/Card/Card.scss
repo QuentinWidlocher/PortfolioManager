@@ -27,6 +27,7 @@
         flex-direction: column;
         place-content: space-around;
         padding: 1rem;
+        padding-bottom: 0.5rem;
 
         >div.card__title {
             display: flex;
@@ -43,13 +44,25 @@
 
         >div.card__badges{
 
+            $badge-size: 2.1rem;
+
             display: flex;
             flex-wrap: wrap;
+            height: $badge-size;
+            overflow-y: hidden;
+
+            margin-top: 0.5rem;
 
             >div.card__badge {
                 font-weight: 600;
-                color: rgba($color: black, $alpha: 0.75);
                 margin-right: 0.5rem;
+                
+                --badge-text-color: "black";
+                --badge-bg-color: "white";
+                color: var(--badge-text-color);
+                background-color: var(--badge-bg-color);
+
+                height: $badge-size;
 
                 $badge_padding: 5px;
                 padding: $badge_padding;

@@ -26,15 +26,15 @@ export default class ProjectView extends Vue {
     fileDownloaded: boolean = true;
 
     formValid: boolean = true;
-    nameRules: any = [
+    nameRules = [
         (v: string) => !!v || 'Name is required',
         (v: string) => (v && v.length <= 16) || 'Name must be less than 16 characters'
     ]
-    descriptionRules: any = [
+    descriptionRules = [
         (v: string) => (v.length <= 20) || 'Description must be less than 20 characters'
     ]
-    urlRules: any = [
-        (v: string) => (!v || v.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) || 'Url is not valid',
+    urlRules = [
+        (v: string) => (!v || !!v.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) || 'Url is not valid',
     ]
 
     snackbar: any = {
@@ -68,7 +68,7 @@ export default class ProjectView extends Vue {
             let r = parseInt(m[0], 16), g = parseInt(m[1], 16), b = parseInt(m[2], 16);
             let brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 
-            return (brightness > 140 ? "black" : "white")
+            return (brightness > 150 ? "black" : "white")
         }
         return "black";
     }

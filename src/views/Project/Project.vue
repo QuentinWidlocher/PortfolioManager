@@ -92,8 +92,9 @@
                             <template v-slot:selection="{ attrs, item, parent, selected }">
                                 <v-chip
                                     :color="middleColor"
+                                    :dark="textColor != 'black'"
                                 >
-                                    <span class="pr-2" :style="{'color': textColor}">
+                                    <span class="pr-2">
                                         {{ item }}
                                     </span>
                                     <v-icon
