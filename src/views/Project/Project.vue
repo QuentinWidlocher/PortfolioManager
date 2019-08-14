@@ -5,7 +5,7 @@
                 <v-row >
                     <v-col sm="12" lg="4" >
                         <v-row justify="center">
-                            <div class="picture" :style="{ '--gradientAngle': gradientAngle + 'deg', '--gradientStart': gradientStart, '--gradientEnd': gradientEnd}">                            
+                            <div id="picture" class="picture" :style="{ '--gradientAngle': gradientAngle + 'deg', '--gradientStart': gradientStart, '--gradientEnd': gradientEnd}">                            
                                 <img v-if="fileDownloaded" :src="project.picture" width="200">
                                 <v-progress-circular
                                     v-if="!fileDownloaded"
@@ -17,7 +17,7 @@
                         </v-row>
                     </v-col>
                     <v-col sm="12" lg="8">
-                        <v-row id="picture">
+                        <v-row id="picture-input">
                             <v-file-input 
                                 class="file-input mt-0 pt-0"
                                 accept="image/*"
@@ -27,7 +27,7 @@
                                 label="Change picture"
                                 @change="onFileChange"></v-file-input>
                         </v-row>
-                        <v-row id="gradient">
+                        <v-row id="gradient-input">
                             <v-col cols="12" sm="6" md="4" xl="3" align-self="center">
                                     <span class="subtitle-1">Gradient Start</span>
                                     <v-color-picker class="ma-auto" v-model="gradientStart" mode="hexa"></v-color-picker>
@@ -59,10 +59,7 @@
                         <v-text-field
                             v-model="project.name"
                             label="Project name"
-                            :rules="[
-                                v => !!v || 'Name is required', 
-                                v => (v && v.length <= 16) || 'Name must be less than 16 characters'
-                            ]"
+                            :rules="nameRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -70,19 +67,42 @@
                         <v-text-field
                             v-model="project.description"
                             label="Description"
-                            :rules="[
-                                v => (v.length <= 20) || 'Description must be less than 20 characters'
-                            ]"
+                            :rules="descriptionRules"
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" lg="4">
                         <v-text-field
                             v-model="project.link"
                             label="URL link"
-                            :rules="[
-                                v => (!v || v.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) || 'Url is not valid',
-                            ]"
+                            :rules="urlRules"
                         ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-combobox
+                            v-model="tags"
+                            :items="tags"
+                            append-icon=""
+                            color="primary"
+                            chips
+                            deletable-chips
+                            multiple
+                            hide-selected
+                            label="Tags"
+                        >
+                            <template v-slot:selection="{ attrs, item, parent, selected }">
+                                <v-chip
+                                    :color="middleColor"
+                                >
+                                    <span class="pr-2" :style="{'color': textColor}">
+                                        {{ item }}
+                                    </span>
+                                    <v-icon
+                                        small
+                                        @click="parent.selectItem(item)"
+                                    >mdi-close</v-icon>
+                                </v-chip>
+                            </template>
+                        </v-combobox>
                     </v-col>
                 </v-row>
                 <v-row id="buttons" class="pb-5" justify="end">

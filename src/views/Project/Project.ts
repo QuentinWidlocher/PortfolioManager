@@ -2,6 +2,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { Project } from '@/classes/Project';
 import { firebaseService } from '@/services/firebase';
 import router from '@/router';
+import { VMenu } from 'vuetify/lib';
 
 @Component({})
 export default class ProjectView extends Vue {
@@ -14,13 +15,27 @@ export default class ProjectView extends Vue {
     gradientEnd: string = '#EDEDED';
     gradientAngle: number = 180;
 
+    tags: string[] = [];
+    selectedTags: string[] = [];
+
     deleteDialog: boolean = false;
 
     createMode: boolean;
     fileUploading: boolean = false;
     fileUploaded: boolean = false;
     fileDownloaded: boolean = true;
+
     formValid: boolean = true;
+    nameRules: any = [
+        (v: string) => !!v || 'Name is required',
+        (v: string) => (v && v.length <= 16) || 'Name must be less than 16 characters'
+    ]
+    descriptionRules: any = [
+        (v: string) => (v.length <= 20) || 'Description must be less than 20 characters'
+    ]
+    urlRules: any = [
+        (v: string) => (!v || v.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) || 'Url is not valid',
+    ]
 
     snackbar: any = {
         visible: false,
@@ -30,6 +45,33 @@ export default class ProjectView extends Vue {
     }
 
     $refs: any;
+
+    private get middleColor(): string {
+        var c = "#";
+        for (var i = 0; i < 3; i++) {
+            var sub1 = this.gradientStart.substring(1 + 2 * i, 3 + 2 * i);
+            var sub2 = this.gradientEnd.substring(1 + 2 * i, 3 + 2 * i);
+            var v1 = parseInt(sub1, 16);
+            var v2 = parseInt(sub2, 16);
+            var v = Math.floor((v1 + v2) / 2);
+            var sub = v.toString(16).toUpperCase();
+            var padsub = ('0' + sub).slice(-2);
+            c += padsub;
+        }
+        return c;
+    }
+
+    private get textColor() {
+        let middleColor = this.middleColor;
+        let m = middleColor.substr(1).match(middleColor.length == 7 ? /(\S{2})/g : /(\S{1})/g);
+        if (m) {
+            let r = parseInt(m[0], 16), g = parseInt(m[1], 16), b = parseInt(m[2], 16);
+            let brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+            return (brightness > 140 ? "black" : "white")
+        }
+        return "black";
+    }
 
     private mounted() {
         this.createMode = (this.projectID === undefined);
@@ -48,9 +90,12 @@ export default class ProjectView extends Vue {
         this.projectRef.get().then((snapshot: any) => {
             
             this.project = snapshot.data();
+
             this.gradientStart = this.project.gradientStart;
             this.gradientEnd = this.project.gradientEnd;
             this.gradientAngle = this.project.gradientAngle;
+            this.tags = this.project.tags;
+            this.selectedTags = this.tags;            
 
             if (!this.project) {
                 router.push({ name: 'home' });
@@ -81,6 +126,7 @@ export default class ProjectView extends Vue {
         this.project.gradientStart = this.gradientStart.slice(1, 7);
         this.project.gradientEnd = this.gradientEnd.slice(1, 7);
         this.project.gradientAngle = this.gradientAngle;
+        this.project.tags = this.tags;
 
         if (this.createMode) {
             this.createProject();
